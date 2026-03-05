@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Feliz Cumpleaños Pipuchi ♥</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blush: #f9e4e4;
+    --rose: #e8a0a0;
+    --rose-deep: #c97272;
+    --wine: #8b3a3a;
+    --cream: #fdf8f5;
+    --warm-white: #fffaf7;
+    --gold: #c9a96e;
+    --gold-soft: #dfc799;
+    --text: #5a2e2e;
+    --text-light: #9b6b6b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Lora', serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ============ MUSIC CONTROL ============ */
+  .music-toggle {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1000;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 2px solid var(--rose);
+    background: rgba(253, 248, 245, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(201, 114, 114, 0.25);
+    transition: all 0.35s ease;
+  }
+
+  .music-toggle:hover { transform: scale(1.08); }
+
+  .music-toggle svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: var(--rose-deep);
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+
+  .music-toggle .pause-icon { display: none; }
+  .music-toggle.playing .play-icon { display: none; }
+  .music-toggle.playing .pause-icon { display: block; }
+
+  .music-toggle.playing {
+    animation: musicPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes musicPulse {
+    0%, 100% { box-shadow: 0 4px 20px rgba(201, 114, 114, 0.25); }
+    50% { box-shadow: 0 4px 30px rgba(201, 114, 114, 0.45); }
+  }
+
+  /* ============ HERO / BIRTHDAY GREETING ============ */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 80%, var(--blush) 0%, var(--cream) 60%);
+    padding: 40px 24px;
+  }
+
+  /* Confetti / sparkle dots */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle, var(--gold-soft) 1px, transparent 1px),
+      radial-gradient(circle, var(--rose) 1px, transparent 1px),
+      radial-gradient(circle, var(--gold) 0.8px, transparent 0.8px);
+    background-size: 80px 80px, 120px 120px, 60px 60px;
+    background-position: 10px 10px, 40px 60px, 70px 30px;
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  /* Balloons */
+  .balloons-container {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .balloon {
+    position: absolute;
+    bottom: -160px;
+    width: clamp(50px, 10vw, 80px);
+    opacity: 0;
+    animation: balloonRise linear forwards;
+  }
+
+  .balloon-body {
+    width: 100%;
+    aspect-ratio: 0.8;
+    border-radius: 50% 50% 50% 50% / 55% 55% 45% 45%;
+    position: relative;
+    box-shadow: inset -8px -4px 20px rgba(255,255,255,0.35), inset 4px 4px 10px rgba(0,0,0,0.06);
+  }
+
+  .balloon-body::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 10px;
+    clip-path: polygon(50% 100%, 0 0, 100% 0);
+  }
+
+  .balloon-string {
+    width: 1.5px;
+    height: clamp(60px, 12vw, 100px);
+    background: linear-gradient(to bottom, var(--text-light), transparent);
+    margin: 0 auto;
+    opacity: 0.4;
+  }
+
+  .b-pink .balloon-body { background: linear-gradient(135deg, #f4a0a0, #e87676); }
+  .b-pink .balloon-body::after { background: #d46a6a; }
+  .b-gold .balloon-body { background: linear-gradient(135deg, #e8d19a, #c9a96e); }
+  .b-gold .balloon-body::after { background: #b89558; }
+  .b-blush .balloon-body { background: linear-gradient(135deg, #f5c6c6, #e8a0a0); }
+  .b-blush .balloon-body::after { background: #d08e8e; }
+  .b-cream .balloon-body { background: linear-gradient(135deg, #f5e6d3, #e0c9a6); }
+  .b-cream .balloon-body::after { background: #ccb48e; }
+  .b-mauve .balloon-body { background: linear-gradient(135deg, #d4a0b9, #b87a99); }
+  .b-mauve .balloon-body::after { background: #a66d88; }
+
+  @keyframes balloonRise {
+    0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+    5% { opacity: 0.85; }
+    50% { opacity: 0.9; }
+    85% { opacity: 0.7; }
+    100% { transform: translateY(calc(-100vh - 200px)) translateX(var(--sway)) rotate(var(--rot)); opacity: 0; }
+  }
+
+  /* Hero text */
+  .hero-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-greeting {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    color: var(--gold);
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: textReveal 1s ease 0.8s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 7.5vw, 4.2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: textReveal 1s ease 1.2s forwards;
+  }
+
+  .hero-name {
+    display: block;
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(3rem, 10vw, 5.5rem);
+    color: var(--rose-deep);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-top: 4px;
+    opacity: 0;
+    animation: textReveal 1s ease 1.6s forwards;
+  }
+
+  .hero-love {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 3vw, 1.4rem);
+    color: var(--text-light);
+    margin-top: 24px;
+    opacity: 0;
+    animation: textReveal 1s ease 2s forwards;
+  }
+
+  .hero-heart {
+    display: inline-block;
+    color: var(--rose-deep);
+    animation: heartbeat 1.4s ease-in-out infinite;
+    animation-delay: 2.5s;
+    opacity: 0;
+    animation: textReveal 0.6s ease 2.4s forwards, heartbeat 1.4s ease-in-out 3s infinite;
+  }
+
+  @keyframes textReveal {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    15% { transform: scale(1.2); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.15); }
+    60% { transform: scale(1); }
+  }
+
+  .scroll-cue {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: textReveal 0.8s ease 3.2s forwards;
+  }
+
+  .scroll-cue span {
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rose);
+  }
+
+  .scroll-cue-arrow {
+    width: 16px;
+    height: 16px;
+    border-right: 1.5px solid var(--rose);
+    border-bottom: 1.5px solid var(--rose);
+    transform: rotate(45deg);
+    animation: arrowBounce 1.8s ease-in-out infinite;
+  }
+
+  @keyframes arrowBounce {
+    0%, 100% { transform: rotate(45deg) translate(0,0); opacity: 0.6; }
+    50% { transform: rotate(45deg) translate(4px, 4px); opacity: 1; }
+  }
+
+  /* ============ PHOTO + MESSAGE CARDS ============ */
+  .memory-section {
+    padding: 0;
+  }
+
+  .memory-card {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+    overflow: hidden;
+  }
+
+  .memory-card:nth-child(odd) {
+    background: var(--warm-white);
+  }
+
+  .memory-card:nth-child(even) {
+    background: linear-gradient(180deg, var(--cream), var(--blush) 50%, var(--cream));
+  }
+
+  /* Decorative corner flourish */
+  .memory-card::before {
+    content: '✦';
+    position: absolute;
+    top: 24px;
+    font-size: 0.8rem;
+    color: var(--gold-soft);
+    opacity: 0.5;
+  }
+
+  .memory-card:nth-child(odd)::before { left: 24px; }
+  .memory-card:nth-child(even)::before { right: 24px; }
+
+  .memory-inner {
+    max-width: 480px;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .memory-inner.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .memory-number {
+    font-family: 'Dancing Script', cursive;
+    font-size: 0.9rem;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+  }
+
+  .memory-photo {
+    width: 85%;
+    aspect-ratio: 3/4;
+    border-radius: 12px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 16px 50px rgba(139, 58, 58, 0.15);
+    margin-bottom: 28px;
+  }
+
+  .photo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-family: 'Lora', serif;
+    color: white;
+  }
+
+  .memory-card:nth-child(1) .photo-placeholder { background: linear-gradient(135deg, #e8a0a0, #d08080); }
+  .memory-card:nth-child(2) .photo-placeholder { background: linear-gradient(135deg, #c9a96e, #b89558); }
+  .memory-card:nth-child(3) .photo-placeholder { background: linear-gradient(135deg, #d4a0b9, #b87a99); }
+  .memory-card:nth-child(4) .photo-placeholder { background: linear-gradient(135deg, #a0b8c9, #7a99b8); }
+
+  .photo-placeholder .ph-icon { font-size: 2.5rem; }
+  .photo-placeholder .ph-text {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    font-style: italic;
+  }
+  .photo-placeholder .ph-hint {
+    font-size: 0.7rem;
+    opacity: 0.5;
+    max-width: 200px;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .memory-message {
+    text-align: center;
+    padding: 0 8px;
+  }
+
+  .memory-message p {
+    font-family: 'Lora', serif;
+    font-size: clamp(1.1rem, 3.2vw, 1.3rem);
+    line-height: 1.9;
+    color: var(--text);
+    font-style: italic;
+  }
+
+  .memory-message .msg-decoration {
+    display: block;
+    margin-top: 16px;
+    font-style: normal;
+    color: var(--gold-soft);
+    font-size: 1.2rem;
+    letter-spacing: 6px;
+  }
+
+  /* ============ LOVE LETTER SECTION ============ */
+  .letter-section {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px;
+    background: linear-gradient(180deg, var(--cream) 0%, var(--blush) 30%, var(--blush) 70%, var(--cream) 100%);
+    position: relative;
+  }
+
+  .letter-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle, var(--gold-soft) 0.5px, transparent 0.5px);
+    background-size: 40px 40px;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+
+  .letter-wrapper {
+    max-width: 560px;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+    z-index: 1;
+  }
+
+  .letter-wrapper.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .letter-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .letter-header-icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 16px;
+    color: var(--rose-deep);
+  }
+
+  .letter-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .letter-header .letter-for {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(1.2rem, 3.5vw, 1.5rem);
+    color: var(--rose-deep);
+    margin-top: 4px;
+  }
+
+  .letter-paper {
+    background: var(--warm-white);
+    border-radius: 4px;
+    padding: clamp(32px, 6vw, 48px) clamp(28px, 5vw, 44px);
+    box-shadow:
+      0 1px 3px rgba(139, 58, 58, 0.06),
+      0 8px 30px rgba(139, 58, 58, 0.08),
+      0 30px 60px rgba(139, 58, 58, 0.04);
+    position: relative;
+  }
+
+  /* Subtle lined paper effect */
+  .letter-paper::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent 31px,
+      rgba(201, 169, 110, 0.08) 31px,
+      rgba(201, 169, 110, 0.08) 32px
+    );
+    pointer-events: none;
+    border-radius: 4px;
+  }
+
+  .letter-date {
+    font-family: 'Lora', serif;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    text-align: right;
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  .letter-salutation {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.4rem;
+    color: var(--rose-deep);
+    margin-bottom: 20px;
+  }
+
+  .letter-text {
+    font-family: 'Lora', serif;
+    font-size: clamp(0.95rem, 2.8vw, 1.08rem);
+    line-height: 2;
+    color: var(--text);
+    white-space: pre-line;
+    position: relative;
+    z-index: 1;
+  }
+
+  .letter-closing {
+    margin-top: 32px;
+    text-align: right;
+  }
+
+  .letter-closing .closing-text {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--text);
+  }
+
+  .letter-closing .closing-name {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.6rem;
+    color: var(--rose-deep);
+    margin-top: 8px;
+  }
+
+  /* ============ FOOTER ============ */
+  .footer {
+    text-align: center;
+    padding: 48px 24px;
+    background: var(--cream);
+  }
+
+  .footer-heart {
+    font-size: 1.5rem;
+    display: inline-block;
+    animation: heartbeat 1.4s ease-in-out infinite;
+    color: var(--rose-deep);
+  }
+
+  .footer-text {
+    font-family: 'Lora', serif;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-top: 8px;
+    letter-spacing: 2px;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 380px) {
+    .memory-card { padding: 48px 16px; }
+    .letter-paper { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- AUDIO: Colocá tu archivo MP3 en la misma carpeta y cambiá el src -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="motivos.mp3" type="audio/mpeg">
+</audio>
+
+<!-- MUSIC TOGGLE -->
+<button class="music-toggle" id="musicBtn" aria-label="Reproducir música">
+  <svg class="play-icon" viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21" fill="var(--rose-deep)" stroke="none"/></svg>
+  <svg class="pause-icon" viewBox="0 0 24 24"><rect x="5" y="3" width="4" height="18" fill="var(--rose-deep)" stroke="none" rx="1"/><rect x="15" y="3" width="4" height="18" fill="var(--rose-deep)" stroke="none" rx="1"/></svg>
+</button>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="balloons-container" id="balloonsContainer"></div>
+  <div class="hero-content">
+    <p class="hero-greeting">✦ hoy es tu día ✦</p>
+    <h1 class="hero-title">
+      Feliz Cumpleaños
+      <span class="hero-name">Pipuchi</span>
+    </h1>
+    <p class="hero-love">te amo mucho <span class="hero-heart">♥</span></p>
+  </div>
+  <div class="scroll-cue">
+    <span>seguí bajando</span>
+    <div class="scroll-cue-arrow"></div>
+  </div>
+</section>
+
+<!-- ============ PHOTO + MESSAGE CARDS ============ -->
+<section class="memory-section">
+
+  <!-- CARD 1 -->
+  <div class="memory-card">
+    <div class="memory-inner">
+      <p class="memory-number">— I —</p>
+      <div class="memory-photo">
+        <img src="foto1.jpg" style="width:100%;height:100%;object-fit:cover" alt="">
+      </div>
+      <div class="memory-message">
+        <p>Quiero que siempre sonrías como en esta foto, porque tenés la sonrisa más linda del mundo.</p>
+        <span class="msg-decoration">· · ♥ · ·</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 2 -->
+  <div class="memory-card">
+    <div class="memory-inner">
+      <p class="memory-number">— II —</p>
+      <div class="memory-photo">
+        <img src="foto2.jpg" style="width:100%;height:100%;object-fit:cover" alt="">
+      </div>
+      <div class="memory-message">
+        <p>No puedo esperar para volver a estar así con vos y que nos demos muchos bechitos. Porque es lo que más extraño en el mundo.</p>
+        <span class="msg-decoration">· · ♥ · ·</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 3 -->
+  <div class="memory-card">
+    <div class="memory-inner">
+      <p class="memory-number">— III —</p>
+      <div class="memory-photo">
+        <img src="foto3.jpg" style="width:100%;height:100%;object-fit:cover" alt="">
+      </div>
+      <div class="memory-message">
+        <p>Sos mi persona en este mundo, con la que puedo hacer el ridículo y cosas cursi sin sentirme juzgado. Sos la persona con la que puedo ser yo completamente y eso no tiene precio.</p>
+        <span class="msg-decoration">· · ♥ · ·</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 4 -->
+  <div class="memory-card">
+    <div class="memory-inner">
+      <p class="memory-number">— IV —</p>
+      <div class="memory-photo">
+        <img src="foto4.jpg" style="width:100%;height:100%;object-fit:cover" alt="">
+      </div>
+      <div class="memory-message">
+        <p>Y hasta ahora este es el último gran recuerdo que tengo nuestro y es con el que me quiero quedar. SIEMPRE JUNTOS, en donde sea.</p>
+        <span class="msg-decoration">· · ♥ · ·</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ============ LOVE LETTER ============ -->
+<section class="letter-section">
+  <div class="letter-wrapper">
+    <div class="letter-header">
+      <span class="letter-header-icon">✉</span>
+      <h2>Una carta para vos</h2>
+      <p class="letter-for">mi Pipuchi</p>
+    </div>
+    <div class="letter-paper">
+      <p class="letter-date">En tu cumpleaños, 2026</p>
+      <p class="letter-salutation">Mi Pipuchi,</p>
+      <p class="letter-text">
+Espero tengas un gran día hoy, que sigas disfrutando al máximo esta experiencia única. Estoy super contento y orgulloso por esto que estás haciendo, que sé que no es nada fácil para vos. Aunque desearía que estés acá, verte tan feliz y viviendo me hace bien a mí también porque te amo muchísimo.
+
+Sos tan increíble gorda y te admiro tanto, no te das una idea cuánto. Sé que estas semanas están siendo más difíciles y extrañas que lo común, que por ahí no nos encontramos tanto, pero sé que ya nos vamos a volver a encontrar y a ser la pareja que somos.
+
+Ya cada vez te queda menos, así que aprovechá y viví, porque cuando vuelvas vamos a ser culo y calzón, para todos lados juntos. Ya me estoy imaginando todas las salidas y los planes que vamos a hacer cuando vuelvas, empezar a vivir en pareja normalmente de nuevo, me emociona y me muero de ganas de hacerlo.
+
+Pero todo a su tiempo, así que ahora viví esta experiencia, que ahora se viene lo mejor con Emilia y tu familia. Sabé que te amo mucho muchísimo y que estoy para lo que necesites siempre.
+      </p>
+      <div class="letter-closing">
+        <p class="closing-text">Con todo mi amor,</p>
+        <p class="closing-name">Tu Pu</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-heart">♥</div>
+  <p class="footer-text">hecho con amor para vos</p>
+</div>
+
+<script>
+  // ============ BALLOONS ============
+  (function createBalloons() {
+    const container = document.getElementById('balloonsContainer');
+    const colors = ['b-pink', 'b-gold', 'b-blush', 'b-cream', 'b-mauve'];
+    const count = 18;
+
+    for (let i = 0; i < count; i++) {
+      const balloon = document.createElement('div');
+      const color = colors[i % colors.length];
+      balloon.classList.add('balloon', color);
+      balloon.style.left = (Math.random() * 94 + 3) + '%';
+      balloon.style.setProperty('--sway', (Math.random() * 80 - 40) + 'px');
+      balloon.style.setProperty('--rot', (Math.random() * 20 - 10) + 'deg');
+      balloon.style.animationDuration = (Math.random() * 6 + 7) + 's';
+      balloon.style.animationDelay = (Math.random() * 8 + 0.5) + 's';
+      balloon.style.width = (Math.random() * 30 + 45) + 'px';
+      balloon.innerHTML = '<div class="balloon-body"></div><div class="balloon-string"></div>';
+      container.appendChild(balloon);
+    }
+
+    // Keep generating balloons
+    setInterval(() => {
+      const balloon = document.createElement('div');
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      balloon.classList.add('balloon', color);
+      balloon.style.left = (Math.random() * 94 + 3) + '%';
+      balloon.style.setProperty('--sway', (Math.random() * 80 - 40) + 'px');
+      balloon.style.setProperty('--rot', (Math.random() * 20 - 10) + 'deg');
+      balloon.style.animationDuration = (Math.random() * 6 + 7) + 's';
+      balloon.style.animationDelay = '0s';
+      balloon.style.width = (Math.random() * 30 + 45) + 'px';
+      balloon.innerHTML = '<div class="balloon-body"></div><div class="balloon-string"></div>';
+      container.appendChild(balloon);
+      // Clean up after animation
+      setTimeout(() => balloon.remove(), 14000);
+    }, 2500);
+  })();
+
+  // ============ SCROLL REVEAL ============
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.memory-inner, .letter-wrapper').forEach(el => observer.observe(el));
+
+  // ============ MUSIC ============
+  const musicBtn = document.getElementById('musicBtn');
+  const audio = document.getElementById('bgMusic');
+  let playing = false;
+
+  musicBtn.addEventListener('click', () => {
+    if (!playing) {
+      audio.play().then(() => {
+        playing = true;
+        musicBtn.classList.add('playing');
+      }).catch(() => {
+        // If no file, silently fail
+        console.log('No se encontró el archivo de audio. Colocá "motivos.mp3" en la misma carpeta.');
+      });
+    } else {
+      audio.pause();
+      playing = false;
+      musicBtn.classList.remove('playing');
+    }
+  });
+</script>
+</body>
+</html>
